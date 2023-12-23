@@ -7,8 +7,10 @@ import { Order as OrderEntity } from '../../entities/Order.entity';
 
 @Injectable()
 export class OrderService {
-  @InjectRepository(OrderEntity)
-  private ordersRepository: Repository<OrderEntity>;
+  constructor(
+    @InjectRepository(OrderEntity)
+    private ordersRepository: Repository<OrderEntity>,
+  ) {}
 
   async findById(orderId: string) {
     try {
@@ -49,5 +51,30 @@ export class OrderService {
       ...data,
       id: orderId,
     });
+  }
+
+  async completeCheckout(orderData: object) {
+    const queryRunner =
+      this.ordersRepository.manager.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const order = await queryRunner.manager.save(OrderEntity, orderData);
+      await queryRunner.manager.update(OrderEntity, order.id, {
+        status: 'ORDERED',
+      });
+
+      await queryRunner.commitTransaction();
+
+      return order;
+    } catch (error) {
+      console.log(error);
+      await queryRunner.rollbackTransaction();
+      return null;
+    } finally {
+      await queryRunner.release();
+    }
   }
 }

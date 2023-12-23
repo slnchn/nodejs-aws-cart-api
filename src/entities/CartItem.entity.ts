@@ -1,5 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Cart } from './Cart.entity';
+
+import { Cart as CartEntity } from './Cart.entity';
+import { Order } from './Order.entity';
 
 @Entity({ name: 'cart_items' })
 export class CartItem {
@@ -12,7 +14,10 @@ export class CartItem {
   @Column()
   count: number;
 
-  @ManyToOne(() => Cart, (cart) => cart.items)
+  @ManyToOne(() => CartEntity, (cart) => cart.items)
   @JoinColumn({ name: 'cart_id' })
-  cart: Cart;
+  cart: CartEntity;
+
+  @ManyToOne(() => Order, (order) => order.items)
+  order: Order;
 }

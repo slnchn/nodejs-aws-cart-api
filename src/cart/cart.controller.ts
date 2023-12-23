@@ -9,7 +9,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 
-import { OrderService } from '../order';
+import { OrderService } from '../order/services';
 import { AppRequest, getUserIdFromRequest } from '../shared';
 
 import { calculateCartTotal } from './models-rules';

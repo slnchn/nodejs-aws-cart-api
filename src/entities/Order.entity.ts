@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
-import { Delivery, Payment } from 'src/order';
+import { Delivery, Payment } from 'src/order/models';
+import { CartItem as CartItemEntity } from './CartItem.entity';
 
 @Entity({ name: 'orders' })
 export class Order {
@@ -28,5 +29,6 @@ export class Order {
   @Column()
   total: number;
 
-  items: any[];
+  @OneToMany(() => CartItemEntity, (cartItem) => cartItem.order)
+  items: CartItemEntity[];
 }

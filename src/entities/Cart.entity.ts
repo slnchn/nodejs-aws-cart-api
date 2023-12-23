@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
 import { CartItem } from './CartItem.entity';
-import { CartStatuses } from 'src/cart';
+import { CartStatuses } from 'src/cart/models';
 
 @Entity({ name: 'carts' })
 export class Cart {

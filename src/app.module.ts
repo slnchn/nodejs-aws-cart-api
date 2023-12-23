@@ -11,6 +11,7 @@ import { OrderModule } from './order/order.module';
 // entities
 import { CartItem as CartItemEntity } from './entities/CartItem.entity';
 import { Cart as CartEntity } from './entities/Cart.entity';
+import { Order as OrderEntity } from './entities/Order.entity';
 
 dotenv.config();
 
@@ -26,7 +27,7 @@ dotenv.config();
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [CartItemEntity, CartEntity],
+      entities: [CartItemEntity, CartEntity, OrderEntity],
       synchronize: false,
 
       ssl: {

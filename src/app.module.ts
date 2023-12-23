@@ -8,6 +8,10 @@ import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
 
+// entities
+import { CartItem as CartItemEntity } from './entities/CartItem.entity';
+import { Cart as CartEntity } from './entities/Cart.entity';
+
 dotenv.config();
 
 @Module({
@@ -22,7 +26,7 @@ dotenv.config();
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [CartItemEntity, CartEntity],
       synchronize: false,
 
       ssl: {

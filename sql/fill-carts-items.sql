@@ -1,8 +1,7 @@
 -- Insert mock data into carts table
 INSERT INTO carts (id, user_id, created_at, updated_at, status) VALUES
     ('29406775-0fca-430a-befd-2abd624506d0', '71b15627-2a92-4cf8-a014-d7bbdce0328e', '2023-01-01', '2023-01-01', 'OPEN'),
-    ('d393b63d-0881-4116-be2e-fca8da1193f2', '373cb81d-8799-4798-bf34-8a1247f319b4', '2023-01-02', '2023-01-02', 'ORDERED'),
-    ('5a7f7919-25ff-4167-bb7f-9d3850ac2218', '71b15627-2a92-4cf8-a014-d7bbdce0328e', '2023-01-03', '2023-01-03', 'OPEN');
+    ('d393b63d-0881-4116-be2e-fca8da1193f2', '373cb81d-8799-4798-bf34-8a1247f319b4', '2023-01-02', '2023-01-02', 'ORDERED');
 
 -- Insert mock data into cart_items table
 INSERT INTO cart_items (product_id, cart_id, count) VALUES

@@ -95,4 +95,31 @@ export class OrderService {
       await queryRunner.release();
     }
   }
+
+  async delete(orderId: string) {
+    const queryRunner =
+      this.ordersRepository.manager.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const order = await this.findById(orderId);
+
+      await queryRunner.manager.delete(OrderEntity, orderId);
+      await queryRunner.manager.update(CartEntity, order.cart_id, {
+        status: 'OPEN',
+      });
+
+      await queryRunner.commitTransaction();
+
+      return order;
+    } catch (error) {
+      console.log(error);
+      await queryRunner.rollbackTransaction();
+      return null;
+    } finally {
+      await queryRunner.release();
+    }
+  }
 }

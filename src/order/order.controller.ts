@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put, Req } from '@nestjs/common';
 
 import { OrderService } from './services';
 
@@ -51,6 +51,17 @@ export class OrderController {
       statusCode: 200,
       message: 'OK',
       data: updatedOrder,
+    };
+  }
+
+  @Delete(':id')
+  async deleteOrder(@Param('id') id) {
+    const order = await this.orderService.delete(id);
+
+    return {
+      statusCode: 200,
+      message: 'OK',
+      data: order,
     };
   }
 }

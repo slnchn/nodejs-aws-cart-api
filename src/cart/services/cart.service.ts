@@ -106,4 +106,17 @@ export class CartService {
     const updatedCart = await this.findCartById(cart_id);
     return updatedCart;
   }
+
+  async addProductToCart(user_id: string, product_id: string, count: number) {
+    const cart = await this.findOrCreateByUserId(user_id);
+
+    await this.cartItemsRepository.insert({
+      cart_id: cart.id,
+      product_id,
+      count,
+    });
+
+    const updatedCart = await this.findCartById(cart.id);
+    return updatedCart;
+  }
 }

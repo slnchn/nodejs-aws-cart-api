@@ -45,11 +45,21 @@ export class CartController {
   @Put()
   async updateUserCart(@Req() req: AppRequest, @Body() body) {
     // TODO: validate body payload...
-    const cart = await this.cartService.updateCartItemCount(
-      body.cartId,
-      body.productId,
-      body.count,
-    );
+
+    let cart = null;
+    if (body.cartId) {
+      cart = await this.cartService.updateCartItemCount(
+        body.cartId,
+        body.productId,
+        body.count,
+      );
+    } else {
+      cart = await this.cartService.addProductToCart(
+        getUserIdFromRequest(req),
+        body.productId,
+        body.count,
+      );
+    }
 
     return {
       statusCode: HttpStatus.OK,

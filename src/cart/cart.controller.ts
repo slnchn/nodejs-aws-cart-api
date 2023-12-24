@@ -84,7 +84,7 @@ export class CartController {
   }
 
   // @UseGuards(JwtAuthGuard)
-  // @UseGuards(BasicAuthGuard)
+  @UseGuards(BasicAuthGuard)
   @Post('checkout')
   async checkout(@Req() req: AppRequest, @Body() body) {
     const userId = getUserIdFromRequest(req);
@@ -100,13 +100,21 @@ export class CartController {
       };
     }
 
-    const { id: cartId, items } = cart;
+    const { id: cartId } = cart;
     const total = calculateCartTotal(cart as Cart);
     const orderData = {
-      ...body, // TODO: validate and pick only necessary data
-      userId,
-      cartId,
-      items,
+      user_id: userId,
+      cart_id: cartId,
+      payment: {
+        type: 'CREDIT_CARD', // no data from the client side :'(
+        address: body.address.address,
+        creaditCard: '0000-0000-0000-0000', // no data from the client side :'(
+      },
+      delivery: {
+        address: body.address,
+      },
+      comments: body.address.comment,
+      status: 'OPEN',
       total,
     };
 

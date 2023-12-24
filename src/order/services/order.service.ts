@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Order as OrderEntity } from '../../entities/Order.entity';
+import { Cart as CartEntity } from '../../entities/Cart.entity';
 
 @Injectable()
 export class OrderService {
@@ -60,7 +61,7 @@ export class OrderService {
 
     try {
       const order = await queryRunner.manager.save(OrderEntity, orderData);
-      await queryRunner.manager.update(OrderEntity, order.id, {
+      await queryRunner.manager.update(CartEntity, order.cart_id, {
         status: 'ORDERED',
       });
 

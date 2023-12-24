@@ -1,11 +1,18 @@
-import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { Delivery, Payment } from 'src/order/models';
 import { CartItem as CartItemEntity } from './CartItem.entity';
 
 @Entity({ name: 'orders' })
 export class Order {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()

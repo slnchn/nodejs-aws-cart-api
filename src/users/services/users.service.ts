@@ -12,9 +12,13 @@ export class UsersService {
   @InjectRepository(UserEntity)
   private usersRepository: Repository<UserEntity>;
 
-  async findOne(userId: string) {
+  async findOne(name: string) {
     try {
-      const user = this.usersRepository.findOne({ where: { id: userId } });
+      const user = await this.usersRepository.findOne({
+        where: { name },
+      });
+
+      console.log('found user', user);
       if (!user) {
         throw new Error('User not found');
       }
@@ -27,7 +31,7 @@ export class UsersService {
 
   async createOne({ name, password }: User) {
     const id = v4();
-    const newUser = { id: name || id, name, password };
+    const newUser = { id, name, password };
     await this.usersRepository.save(newUser);
     return newUser;
   }

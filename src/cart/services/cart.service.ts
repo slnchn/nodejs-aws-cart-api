@@ -45,9 +45,8 @@ export class CartService {
 
   async findOrCreateByUserId(userId: string): Promise<Cart> {
     const userCart = await this.findByUserId(userId);
-
     if (userCart) {
-      return userCart;
+      return userCart as Cart;
     }
 
     return await this.createByUserId(userId);

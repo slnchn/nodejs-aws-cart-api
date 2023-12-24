@@ -19,8 +19,6 @@ export class OrderService {
         relations: ['items'],
       });
 
-      console.log(order);
-
       return order;
     } catch (error) {
       console.log(error);

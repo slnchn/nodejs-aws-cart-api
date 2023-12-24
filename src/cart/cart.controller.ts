@@ -7,6 +7,7 @@ import {
   Req,
   Post,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 
 import { OrderService } from '../order/services';
@@ -14,6 +15,8 @@ import { AppRequest, getUserIdFromRequest } from '../shared';
 
 import { calculateCartTotal } from './models-rules';
 import { CartService } from './services';
+import { Cart } from './models';
+import { BasicAuthGuard } from 'src/auth';
 
 @Controller('api/profile/cart')
 export class CartController {
@@ -23,7 +26,7 @@ export class CartController {
   ) {}
 
   // @UseGuards(JwtAuthGuard)
-  // @UseGuards(BasicAuthGuard)
+  @UseGuards(BasicAuthGuard)
   @Get()
   async findUserCart(@Req() req: AppRequest) {
     const cart = await this.cartService.findOrCreateByUserId(
@@ -87,7 +90,7 @@ export class CartController {
     }
 
     const { id: cartId, items } = cart;
-    const total = calculateCartTotal(cart);
+    const total = calculateCartTotal(cart as Cart);
     const orderData = {
       ...body, // TODO: validate and pick only necessary data
       userId,

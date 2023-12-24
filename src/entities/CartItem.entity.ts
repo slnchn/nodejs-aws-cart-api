@@ -19,5 +19,6 @@ export class CartItem {
   cart: CartEntity;
 
   @ManyToOne(() => Order, (order) => order.items)
+  @JoinColumn({ name: 'cart_id' })
   order: Order;
 }

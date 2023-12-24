@@ -30,5 +30,6 @@ export class Order {
   total: number;
 
   @OneToMany(() => CartItemEntity, (cartItem) => cartItem.order)
+  @JoinColumn({ name: 'cart_id' })
   items: CartItemEntity[];
 }

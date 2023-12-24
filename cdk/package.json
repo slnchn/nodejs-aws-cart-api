@@ -10,7 +10,9 @@
     "test": "jest",
     "cdk": "cdk",
     "build:test": "npm run build && npm run test",
-    "build:synth:deploy": "npm run build && cdk synth && cdk deploy"
+    "cdk:bootstrap": "npx cdk bootstrap",
+    "build:synth:deploy": "npm run build && cdk synth && cdk deploy",
+    "cdk:destroy": "npx cdk destroy"
   },
   "devDependencies": {
     "@types/jest": "^29.5.8",

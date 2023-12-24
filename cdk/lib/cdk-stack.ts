@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as nodeLambda from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
@@ -21,6 +22,7 @@ export class CdkStack extends cdk.Stack {
         runtime: lambda.Runtime.NODEJS_18_X,
         entry: path.join(__dirname, '../lambda/nest-server.ts'),
         handler: 'index.nestServer',
+        timeout: cdk.Duration.seconds(10),
 
         environment: {
           NODE_ENV: process.env.NODE_ENV as string,

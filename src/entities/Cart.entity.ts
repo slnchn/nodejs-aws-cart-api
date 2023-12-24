@@ -1,7 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
 import { CartItem } from './CartItem.entity';
-import { CartStatuses } from 'src/cart/models';
 
 @Entity({ name: 'carts' })
 export class Cart {
@@ -18,7 +17,7 @@ export class Cart {
   updated_at: string;
 
   @Column({ enum: ['OPEN', 'ORDERED'] })
-  status: CartStatuses;
+  status: string;
 
   @OneToMany(() => CartItem, (cartItems) => cartItems.cart)
   @JoinColumn({ name: 'id' })

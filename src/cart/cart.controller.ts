@@ -115,6 +115,13 @@ export class CartController {
       },
       comments: body.address.comment,
       status: 'OPEN',
+      statusHistory: [
+        {
+          status: 'OPEN',
+          timestamp: new Date(),
+          comment: 'Order has been created',
+        },
+      ],
       total,
     };
 

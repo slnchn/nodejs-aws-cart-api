@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Delivery, Payment } from 'src/order/models';
+import { Delivery, Payment, StatusHistory } from 'src/order/models';
 import { Cart as CartEntity } from './Cart.entity';
 import { CartItem as CartItemEntity } from './CartItem.entity';
 import { User as UserEntity } from './User.entity';
@@ -35,6 +35,9 @@ export class Order {
 
   @Column()
   status: string;
+
+  @Column({ type: 'jsonb', name: 'status_history' })
+  statusHistory: StatusHistory[];
 
   @Column()
   total: number;

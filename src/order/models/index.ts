@@ -11,6 +11,12 @@ export type Delivery = {
   address: any;
 };
 
+export type StatusHistory = {
+  status: string;
+  timestamp: Date;
+  comment?: string;
+};
+
 export type Order = {
   id?: string;
   userId: string;

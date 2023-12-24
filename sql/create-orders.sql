@@ -9,5 +9,6 @@ CREATE TABLE orders (
     delivery JSON,
     comments TEXT,
     status VARCHAR(64),
+    status_history JSON,
     total NUMERIC
 );

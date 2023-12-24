@@ -4,12 +4,34 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Cart as CartEntity } from 'src/entities/Cart.entity';
+import { CartItem as CartItemEntity } from 'src/entities/CartItem.entity';
 import { Cart, CartStatuses } from '../models';
 
 @Injectable()
 export class CartService {
   @InjectRepository(CartEntity)
   private cartsRepository: Repository<CartEntity>;
+
+  @InjectRepository(CartItemEntity)
+  private cartItemsRepository: Repository<CartItemEntity>;
+
+  async findCartById(cartId: string) {
+    try {
+      const cart = await this.cartsRepository.findOne({
+        where: { id: cartId },
+        relations: ['items', 'items.product'],
+      });
+
+      if (cart) {
+        return { ...cart };
+      }
+
+      return null;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
 
   async findByUserId(userId: string) {
     try {
@@ -68,5 +90,20 @@ export class CartService {
 
   async removeByUserId(userId) {
     await this.cartsRepository.delete({ user_id: userId });
+  }
+
+  async updateCartItemCount(
+    cart_id: string,
+    product_id: string,
+    count: number,
+  ) {
+    if (count <= 0) {
+      await this.cartItemsRepository.delete({ cart_id, product_id });
+    } else {
+      await this.cartItemsRepository.update({ cart_id, product_id }, { count });
+    }
+
+    const updatedCart = await this.findCartById(cart_id);
+    return updatedCart;
   }
 }

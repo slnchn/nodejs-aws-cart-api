@@ -41,13 +41,14 @@ export class CartController {
   }
 
   // @UseGuards(JwtAuthGuard)
-  // @UseGuards(BasicAuthGuard)
+  @UseGuards(BasicAuthGuard)
   @Put()
   async updateUserCart(@Req() req: AppRequest, @Body() body) {
     // TODO: validate body payload...
-    const cart = await this.cartService.updateByUserId(
-      getUserIdFromRequest(req),
-      body,
+    const cart = await this.cartService.updateCartItemCount(
+      body.cartId,
+      body.productId,
+      body.count,
     );
 
     return {
@@ -55,7 +56,7 @@ export class CartController {
       message: 'OK',
       data: {
         cart,
-        total: calculateCartTotal(cart),
+        total: calculateCartTotal(cart as Cart),
       },
     };
   }

@@ -15,11 +15,11 @@ export class CartService {
     try {
       const cart = await this.cartsRepository.findOne({
         where: { user_id: userId },
-        relations: ['items'],
+        relations: ['items', 'items.product'],
       });
 
       if (cart) {
-        return { ...cart, items: [] };
+        return { ...cart };
       }
 
       return null;

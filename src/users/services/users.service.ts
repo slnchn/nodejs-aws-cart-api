@@ -18,7 +18,6 @@ export class UsersService {
         where: { name },
       });
 
-      console.log('found user', user);
       if (!user) {
         throw new Error('User not found');
       }

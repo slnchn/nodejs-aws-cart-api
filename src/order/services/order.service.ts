@@ -33,10 +33,10 @@ export class OrderService {
     try {
       const order = await this.ordersRepository.findOne({
         where: { id: orderId },
-        relations: ['items'],
+        relations: ['cart', 'cart.items', 'cart.items.product'],
       });
 
-      return order;
+      return { ...order, items: order.cart.items };
     } catch (error) {
       console.log(error);
       return null;

@@ -16,4 +16,16 @@ export class OrderController {
       data: orders,
     };
   }
+
+  // get order by id
+  @Get(':id')
+  async getOrder(id: string) {
+    const order = await this.orderService.findById(id);
+
+    return {
+      statusCode: 200,
+      message: 'OK',
+      data: order,
+    };
+  }
 }

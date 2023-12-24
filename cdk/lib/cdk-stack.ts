@@ -58,5 +58,16 @@ export class CdkStack extends cdk.Stack {
 
     const checkout = cart.addResource('checkout');
     checkout.addMethod(lambda.HttpMethod.POST);
+
+    const order = api.addResource('order');
+    order.addMethod(lambda.HttpMethod.GET);
+    order.addMethod(lambda.HttpMethod.PUT);
+
+    const orderById = order.addResource('{order_id}');
+    orderById.addMethod(lambda.HttpMethod.GET);
+    orderById.addMethod(lambda.HttpMethod.DELETE);
+
+    const orderStatus = orderById.addResource('status');
+    orderStatus.addMethod(lambda.HttpMethod.PUT);
   }
 }

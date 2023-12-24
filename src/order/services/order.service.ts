@@ -13,6 +13,22 @@ export class OrderService {
     private ordersRepository: Repository<OrderEntity>,
   ) {}
 
+  async findAll() {
+    try {
+      const orders = await this.ordersRepository.find({
+        relations: ['user', 'cart', 'cart.items'],
+      });
+
+      return orders.map((order) => ({
+        ...order,
+        items: order.cart.items,
+      }));
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   async findById(orderId: string) {
     try {
       const order = await this.ordersRepository.findOne({

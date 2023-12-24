@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 
-import { CartItem } from './CartItem.entity';
+import { CartItem as CartItemEntity } from './CartItem.entity';
+import { Order as OrderEntity } from './Order.entity';
 
 @Entity({ name: 'carts' })
 export class Cart {
@@ -19,7 +20,11 @@ export class Cart {
   @Column({ enum: ['OPEN', 'ORDERED'] })
   status: string;
 
-  @OneToMany(() => CartItem, (cartItems) => cartItems.cart)
+  @OneToMany(() => OrderEntity, (cartItems) => cartItems.cart)
   @JoinColumn({ name: 'id' })
-  items: CartItem[];
+  orders: OrderEntity[];
+
+  @OneToMany(() => CartItemEntity, (cartItems) => cartItems.cart)
+  @JoinColumn({ name: 'id' })
+  items: CartItemEntity[];
 }

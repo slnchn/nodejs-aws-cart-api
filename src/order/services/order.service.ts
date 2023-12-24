@@ -66,6 +66,9 @@ export class OrderService {
       ...data,
       id: orderId,
     });
+
+    const updatedOrder = await this.findById(orderId);
+    return updatedOrder;
   }
 
   async completeCheckout(orderData: object) {

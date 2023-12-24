@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, Req } from '@nestjs/common';
 
 import { OrderService } from './services';
 
@@ -19,13 +19,38 @@ export class OrderController {
 
   // get order by id
   @Get(':id')
-  async getOrder(id: string) {
+  async getOrder(@Param('id') id) {
     const order = await this.orderService.findById(id);
 
     return {
       statusCode: 200,
       message: 'OK',
       data: order,
+    };
+  }
+
+  @Put(':id/status')
+  async updateOrderStatus(@Param('id') id, @Body() body) {
+    const order = await this.orderService.findById(id);
+
+    const updatedStatusHistory = [
+      ...order.statusHistory,
+      {
+        status: body.status,
+        timestamp: new Date(),
+        comment: body.comment,
+      },
+    ];
+
+    const updatedOrder = await this.orderService.update(id, {
+      status: body.status,
+      statusHistory: updatedStatusHistory,
+    });
+
+    return {
+      statusCode: 200,
+      message: 'OK',
+      data: updatedOrder,
     };
   }
 }

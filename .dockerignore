@@ -1,0 +1,14 @@
+Dockerfile
+.dockerignore
+
+# I don't need to have cdk lambda config in the image
+
+cdk/
+
+# I don't need to copy app bundle
+
+dist/
+
+# I don't need to copy node_modules
+
+node_modules/

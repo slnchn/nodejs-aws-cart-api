@@ -27,5 +27,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/.env ./
 
+EXPOSE 4000
+
 # Start the app
 CMD [ "node", "./dist/main.js" ]

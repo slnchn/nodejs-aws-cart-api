@@ -17,6 +17,27 @@ import { Product as ProductEntity } from './entities/Product.entity';
 
 dotenv.config();
 
+console.log({
+  type: 'postgres',
+  host: process.env.DB_HOST,
+  port: +process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  entities: [
+    CartItemEntity,
+    CartEntity,
+    OrderEntity,
+    UserEntity,
+    ProductEntity,
+  ],
+  synchronize: false,
+
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
 @Module({
   imports: [
     AuthModule,

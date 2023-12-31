@@ -12,3 +12,7 @@ dist/
 # I don't need to copy node_modules
 
 node_modules/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+.git
+.gitignore

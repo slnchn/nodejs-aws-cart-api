@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as dotenv from 'dotenv';
 
 import { AppController } from './app.controller';
 
@@ -15,28 +14,8 @@ import { Order as OrderEntity } from './entities/Order.entity';
 import { User as UserEntity } from './entities/User.entity';
 import { Product as ProductEntity } from './entities/Product.entity';
 
-dotenv.config();
-
-console.log({
-  type: 'postgres',
-  host: process.env.DB_HOST,
-  port: +process.env.DB_PORT,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  entities: [
-    CartItemEntity,
-    CartEntity,
-    OrderEntity,
-    UserEntity,
-    ProductEntity,
-  ],
-  synchronize: false,
-
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+// config
+import { config } from './config';
 
 @Module({
   imports: [
@@ -45,11 +24,11 @@ console.log({
     OrderModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: config.DB_HOST,
+      port: config.DB_PORT,
+      username: config.DB_USERNAME,
+      password: config.DB_PASSWORD,
+      database: config.DB_NAME,
       entities: [
         CartItemEntity,
         CartEntity,

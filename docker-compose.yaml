@@ -1,5 +1,0 @@
-services:
-  server:
-    build: .
-    env_file:
-      - .env

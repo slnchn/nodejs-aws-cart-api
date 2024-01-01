@@ -1,18 +1,18 @@
-# syntax=docker/dockerfile:1
-
 # Stage 1
 FROM node:18-alpine AS builder
 
 WORKDIR /usr/src/app
 
-# Copy "package.json" and "package.lock.json" files and install dependencies.
+# copy package.json and package-lock.json
 COPY package*.json .
+
+# install dependencies
 RUN npm install
 
-# Copy the rest of the source files into the image.
+# copy files and folders to the working directory
 COPY . .
 
-# Build the application.
+# build
 RUN npm run build
 
 # Stage 2
@@ -20,8 +20,11 @@ FROM node:18-alpine
 
 WORKDIR /usr/src/app
 
-COPY --from=builder /usr/src/app/dist /usr/src/app
+# copy the bundle from the previous stage
+COPY --from=builder /usr/src/app/dist .
 
+# it doesn't work without it :'(
 EXPOSE 4000
 
+# run the app
 CMD [ "node", "main.js" ]

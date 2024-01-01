@@ -6,6 +6,7 @@ module.exports = (options, webpack) => {
 
   return {
     ...options,
+    mode: 'production',
     externals: [],
     output: {
       ...options.output,

@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as dotenv from 'dotenv';
 
 import { AppController } from './app.controller';
 
@@ -14,8 +13,6 @@ import { Cart as CartEntity } from './entities/Cart.entity';
 import { Order as OrderEntity } from './entities/Order.entity';
 import { User as UserEntity } from './entities/User.entity';
 import { Product as ProductEntity } from './entities/Product.entity';
-
-dotenv.config();
 
 @Module({
   imports: [
